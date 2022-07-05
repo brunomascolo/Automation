@@ -1,0 +1,9 @@
+[
+  {
+    "albumId": 1,
+    "id": 1,
+     <#if title??>"title": "posting a new photo",</#if>
+    "url": "https://bruno.com",
+    "thumbnailUrl": "https://bruno.com"
+  }
+]
