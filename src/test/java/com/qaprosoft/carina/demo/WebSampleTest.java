@@ -16,6 +16,7 @@
 package com.qaprosoft.carina.demo;
 
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
+import com.qaprosoft.carina.core.foundation.dataprovider.annotations.XlsDataSourceParameters;
 import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
 import com.qaprosoft.carina.core.foundation.utils.tag.Priority;
 import com.qaprosoft.carina.core.foundation.utils.tag.TestPriority;
@@ -167,15 +168,20 @@ public class WebSampleTest implements IAbstractTest {
         Assert.assertTrue(contactUsPage.isMessageSent(), "Contact form not send");
     }
 
-    @Test()
+    @Test(dataProvider = "DataProvider")
+    @XlsDataSourceParameters(path = "xls/test.xlsx", sheet = "Sheet1", dsUid = "TUID", dsArgs = "Color, Item, Search")
     @MethodOwner(owner = "bruno")
-    public void testSearchItem(){
-        String item = "blue shirt";
+    public void testSearchItem(String Color, String Item, String Search){
+        String item = String.valueOf(Color) + ' ' + String.valueOf(Item);
+        String search = String.valueOf(Search);
+
+        Assert.assertEquals(item, search, "search item didnt match");
+
         com.qaprosoft.carina.demo.gui.laba.pages.HomePage homePage = new com.qaprosoft.carina.demo.gui.laba.pages.HomePage(getDriver());
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened!");
 
-        SearchPage searchPage = homePage.searchItem(item);
+        SearchPage searchPage = homePage.searchItem(search);
         Assert.assertTrue(searchPage.isSearchCorrect(), "Search result is empty");
     }
 

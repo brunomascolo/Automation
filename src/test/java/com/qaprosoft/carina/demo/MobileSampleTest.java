@@ -15,6 +15,9 @@
  */
 package com.qaprosoft.carina.demo;
 
+import com.qaprosoft.carina.demo.mobile.gui.pages.android.calculator.android.CalculatorPage;
+import com.qaprosoft.carina.demo.mobile.gui.pages.android.calculator.android.HomePage;
+import com.qaprosoft.carina.demo.mobile.gui.pages.android.calculator.android.LaunchpadPage;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
@@ -99,6 +102,19 @@ public class MobileSampleTest implements IAbstractTest, IMobileUtils {
         Assert.assertTrue(uiElements.isFemaleRadioButtonSelected(), "Female radio button was not selected!");
         uiElements.clickOnOtherRadioButton();
         Assert.assertTrue(uiElements.isOthersRadioButtonSelected(), "Others radio button was not selected!");
+    }
+
+    @Test()
+    @MethodOwner(owner = "bruno")
+    public void testAddition(){
+        int expectedResult = 10;
+        HomePage homePage = new HomePage(getDriver());
+        Assert.assertTrue(homePage.isPageOpened(), "Phone didnt start");
+        LaunchpadPage launchpadPage = homePage.openLaunchpad();
+        Assert.assertTrue(launchpadPage.isPageOpened(), "Launchpad not opened");
+        CalculatorPage calculatorPage = launchpadPage.openCalculator();
+        calculatorPage.makeAdittion();
+        Assert.assertEquals(calculatorPage.getResult(), expectedResult, "Wrong result");
     }
 
 }
